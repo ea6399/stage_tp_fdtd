@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra -O2
 LDLIBS = -llapack -lblas
 
 # Source files
-SOURCES = numerics.f90 main.f90
+SOURCES = structure.f90 source.f90 main.f90
 OBJECTS = $(SOURCES:.f90=.o)
 
 # Executable name

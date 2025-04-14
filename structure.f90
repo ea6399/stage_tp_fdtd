@@ -16,14 +16,14 @@ module structure
         REAL(8), ALLOCATABLE :: E(:), H(:)                                          ! Champs E et H
         REAL(8), ALLOCATABLE :: c_E(:), c_H(:)                                      ! Coefficient E et H
         INTEGER :: Nres                                                             ! Nombre de résultats
-        INTEGER :: pres                                                             ! Position du point d'observation pour chaque résultat
+        INTEGER, ALLOCATABLE :: pres(:)                                                             ! Position du point d'observation pour chaque résultat
         REAL(8), ALLOCATABLE :: Eres(:,:), Hres(:,:)                                ! Tableau 2D hébergeant les résultats E et H
     CONTAINS    
         procedure :: resultat_init
-        procedure :: init 
-        procedure :: calcule
-        procedure :: resultat_stockage
-    end tpye FDTD1D
+        ! procedure :: init 
+        ! procedure :: calcule
+        ! procedure :: resultat_stockage
+    end type FDTD1D
 
 
     CONTAINS
@@ -37,22 +37,24 @@ module structure
         ! Initialisation des variables locales
         INTEGER :: i, n
 
+        fd%Nres = 4 ! Nombre de résultats
 
-        ALLOCATE( E(Nx + 1), H(Nx + 1), c_E(Nx + 1), c_H(Nx + 1) )
+        ALLOCATE(fd%pres(fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
 
-        Nres = 4
 
-        E = 0.0d0
-        H = 0.0d0
+        fd%E = 0.0d0
+        fd%H = 0.0d0
 
-        c_E = 1.0d0 / (epsilon_0 * c_H)
-        c_H = 1.0d0 / (mu_0 * c_E)
+        fd%c_E = 1.0d0 / (epsilon_0 * fd%c_H)
+        fd%c_H = 1.0d0 / (mu_0 * fd%c_E)
 
-        Nres = 10
-        pres = 100
+        fd%Nres = 10
+        fd%pres = 100
 
 
     END SUBROUTINE resultat_init  
+
+
 
 
 

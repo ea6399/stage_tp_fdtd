@@ -1,5 +1,6 @@
 PROGRAM FDTD_1D
-    use numerics
+    use structure
+    use source
 
     IMPLICIT NONE
 
