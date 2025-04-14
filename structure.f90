@@ -1,4 +1,4 @@
-module numerics
+module structure
     implicit none
 
     ! Déclaration de variables
@@ -46,4 +46,4 @@ module numerics
 
 
 
-endmodule numerics
+endmodule structure
