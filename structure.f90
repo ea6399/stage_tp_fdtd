@@ -40,6 +40,15 @@ module structure
         fd%Nres = 4 ! Nombre de résultats
 
         ALLOCATE(fd%pres(fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
+        ALLOCATE(fd%Eres(Nt,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
+        ALLOCATE(fd%Hres(Nt,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats H, champs magnétique
+
+        fd%pres(1) = 1
+        fd%pres(2) = 100
+        fd%pres(3) = 200
+        fd%pres(4) = Nx
+
+        
 
 
         fd%E = 0.0d0
