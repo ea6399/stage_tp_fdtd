@@ -5,6 +5,7 @@ PROGRAM FDTD_1D
     IMPLICIT NONE
     ! Déclaration des variables
     REAL(8) :: fmax, c
+    REAL(8) :: attfmax, att0
     REAL(8) :: t0, T
     REAL(8) :: dt, dx
     ! Classe FDTD1D
@@ -18,10 +19,6 @@ PROGRAM FDTD_1D
     ! Calcul des pas spatio-temporels
     dx = (c / fmax) / 30                                ! 30 cellules pour la longueur d'onde min
     dt = 0.98d0 * dx / c                                ! Critère de stabilité dt <= dx/c
-    
-    ! Calcul de la fonction d'excitation : une gaussienne
-    T = sqrt( log(10.0d0) ) / (PI * fmax)               !
-    t0 = T * sqrt(log(1000.0d0))                        ! Retards
 
 
 
@@ -36,6 +33,9 @@ PROGRAM FDTD_1D
     
     ! Initialisation des champs
     call init(fd, Nx, dt, dx)
+
+    !Initialisation gaussienne
+    call compute_gauss(et, base_t, Nt)
 
     
 

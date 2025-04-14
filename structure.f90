@@ -1,4 +1,6 @@
 module structure
+
+
      implicit none
 
      ! Déclaration de variables
