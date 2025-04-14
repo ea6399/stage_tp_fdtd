@@ -11,7 +11,7 @@ PROGRAM FDTD_1D
     type(FDTD1D) :: fd
 
     !Initialisation des variables
-     
+
     fmax = 1.0e9                                        ! Fréquence max d'étude
     c = 1.d0 / sqrt(epsilon_0 * mu_0)                   ! Vitesse de la lumière
 
@@ -27,9 +27,6 @@ PROGRAM FDTD_1D
 
 
 
-
-
-
     !----------------------------------------!
     ! 1D FDTD simulation of a Gaussian pulse !
     !----------------------------------------!
@@ -39,6 +36,8 @@ PROGRAM FDTD_1D
     
     ! Initialisation des champs
     call init(fd, Nx, dt, dx)
+
+    
 
     
 
