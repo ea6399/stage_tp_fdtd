@@ -9,6 +9,8 @@ PROGRAM FDTD_1D
     ! 1D FDTD simulation of a Gaussian pulse !
     !----------------------------------------!
 
+    !test
+
     
 
 
