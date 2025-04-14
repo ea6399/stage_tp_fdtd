@@ -29,10 +29,14 @@ module structure
     CONTAINS
 
 
-    SUBROUTINE resultat_init(Nx,dt,dx)
-        ! Initialisation des variables
-        INTEGER :: Nx
-        REAL(8) :: dt, dx
+    SUBROUTINE resultat_init(fd, Nx, Nt)
+        ! Initialisation des arguments
+        class(FDTD1D), intent(inout) :: fd
+        INTEGER, intent(in) :: Nx, Nt
+        
+        ! Initialisation des variables locales
+        INTEGER :: i, n
+
 
         ALLOCATE( E(Nx + 1), H(Nx + 1), c_E(Nx + 1), c_H(Nx + 1) )
 
