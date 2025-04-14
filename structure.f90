@@ -10,14 +10,20 @@ module structure
 
 
 
-    ! FDTD variables
-    REAL(8), ALLOCATABLE :: E(:), H(:)                                          ! Champs E et H
-    REAL(8), ALLOCATABLE :: c_E(:), c_H(:)                                      ! Coefficient E et H
-    INTEGER :: Nres                                                             ! Nombre de résultats
-    INTEGER :: pres                                                             ! Position du point d'observation pour chaque résultat
-    REAL(8), ALLOCATABLE :: Eres(:,:), Hres(:,:)                                ! Tableau 2D hébergeant les résultats E et H
-
-
+    ! Type FDTD1D 
+    type :: FDTD1D
+        ! FDTD variables
+        REAL(8), ALLOCATABLE :: E(:), H(:)                                          ! Champs E et H
+        REAL(8), ALLOCATABLE :: c_E(:), c_H(:)                                      ! Coefficient E et H
+        INTEGER :: Nres                                                             ! Nombre de résultats
+        INTEGER :: pres                                                             ! Position du point d'observation pour chaque résultat
+        REAL(8), ALLOCATABLE :: Eres(:,:), Hres(:,:)                                ! Tableau 2D hébergeant les résultats E et H
+    CONTAINS    
+        procedure :: resultat_init
+        procedure :: init 
+        procedure :: calcule
+        procedure :: resultat_stockage
+    end tpye FDTD1D
 
 
     CONTAINS
