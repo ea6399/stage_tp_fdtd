@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra -O2
 LDLIBS = -llapack -lblas
 
 # Source files
-SOURCES = structure.f90 source.f90 main.f90
+SOURCES = numerics.f90 structure.f90 source.f90 main.f90
 OBJECTS = $(SOURCES:.f90=.o)
 
 # Executable name
@@ -23,7 +23,7 @@ $(EXEC): $(OBJECTS)
 
 # Clean up
 clean:
-	rm -f $(OBJECTS) $(EXEC) *.txt *.mod
+	rm -f $(OBJECTS) $(EXEC) *.txt *.mod *.o
 
 # Phony targets
 .PHONY: all clean

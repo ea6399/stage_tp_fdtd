@@ -5,7 +5,7 @@
 #include <math.h>
 using namespace std;
 
-const int  Nt = 1200; // Nbre d'échantillons temps
+const int  Nt = 1200; // Nbre d'ï¿½chantillons temps
 const int  Nx = 500;  // Nbre de cellules en espace
 const float  EPSILON_0 = 8.854187818e-12;
 const float  MU_0      = 12.5663706144e-7;
@@ -16,9 +16,9 @@ class Fdtd1d
   public :
     float  *E,*H;
     float  *c_E, *c_H; // coefficient pour E et H
-    int Nres; // Nombre de résultats
-    int *pres;  // position du point d'observation pour chaque résultat
-    float **Eres,**Hres; // tableau 2D hébergeant les résultats
+    int Nres; // Nombre de rï¿½sultats
+    int *pres;  // position du point d'observation pour chaque rï¿½sultat
+    float **Eres,**Hres; // tableau 2D hï¿½bergeant les rï¿½sultats
   
     void resultat_init(int Nx, int Nt);
     void init(int Nx, float dt, float dx);
@@ -36,14 +36,14 @@ int main(int argc, char *argv[])
   int i;
   float Esrc[Nt];
   cout <<"==================== FDTD 1D =================" << endl;
-  // Fréquence max d'étude
+  // Frï¿½quence max d'ï¿½tude
   float fmax    = 1e9;
 
   //--- Calcul du pas spatial et du pas temporel
   float c  = 1 / sqrt(EPSILON_0*MU_0);
   // 30 cellules pour la longueur d'onde min
   float dx = (c/fmax) / 30 ;
-  // critère de stabilité dt <= dx/c
+  // critï¿½re de stabilitï¿½ dt <= dx/c
   float dt = 0.98*dx / c;
 
   // Calcul de la fonction d'excitation : une gaussienne  
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
   //--- Calcul ---
   fd.calcul(Nx,Nt,Esrc);
   
-  //--- Stockage des résultats ---
+  //--- Stockage des rï¿½sultats ---
   fd.resultat_stockage(Nt,dt);
 
 }
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
 
 //-------------------------------------------------------------------
-//--------------- Définition des points d'observation -----------------
+//--------------- Dï¿½finition des points d'observation -----------------
 //-------------------------------------------------------------------
 void Fdtd1d::resultat_init(int Nx, int Nt)
 {
@@ -92,7 +92,7 @@ void Fdtd1d::resultat_init(int Nx, int Nt)
     Eres[i] = new float [Nt];
     Hres[i] = new float [Nt];
   }
-  //Eres = new **float [Nt];
+  //Eres = new **float [Nt][Nres];
 //  Hres = new float [Nt][Nres];
   pres[0] = 1;
   pres[1] = 100;
@@ -131,15 +131,15 @@ void Fdtd1d::init(int Nx, float dt, float dx)
   cout <<"c_H[0]  = "<<c_H[0]<< endl;
 }
 //-------------------------------------------------------------------
-//------------ Calcul pendant les itérations temporelles  -----------
+//------------ Calcul pendant les itï¿½rations temporelles  -----------
 //-------------------------------------------------------------------
 void Fdtd1d::calcul(int Nx, int Nt,float *Esrc)
 {
   int i,n;
-//--- Début des traitements ---
+//--- Dï¿½but des traitements ---
 
 //-------------- boucle sur le temps -----------------
-cout <<"Nombre d''itérations temporelles :"<<Nt<< endl;
+cout <<"Nombre d''itï¿½rations temporelles :"<<Nt<< endl;
 for (n=0;n<Nt;n++)
 {  
   //----------- boucles sur l'espace  ------------

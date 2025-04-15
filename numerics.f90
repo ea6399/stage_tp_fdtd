@@ -19,6 +19,11 @@ Module numerics
             REAL(8), PARAMETER :: dt       = 0.98d0 * dx / c
             INTEGER, PARAMETER :: LBD      = 0
             INTEGER, PARAMETER :: UBD      = Nt - 1
+            INTEGER, PARAMETER :: idfile   = 10
+
+
+            ! Déclaration des matrices et vecteurs
+            REAL(8), DIMENSION(LBD:UBD) :: et, base_t
 
 
       CONTAINS

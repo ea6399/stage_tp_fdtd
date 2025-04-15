@@ -1,16 +1,9 @@
 module structure
 
+     use numerics
+
 
      implicit none
-
-     ! Déclaration de variables
-     INTEGER, PARAMETER :: Nt = 1200                                             ! Nombre d'échantillons en temps
-     INTEGER, PARAMETER :: Nx = 500                                              ! Nombre d'échantillons en espace
-     REAL(8), PARAMETER :: epsilon_0 = 8.854187817e-12                           ! Permittivité du vide
-     REAL(8), PARAMETER :: mu_0 = 1.256637061e-7                                 ! Perméabilité du vide
-     REAL(8), PARAMETER :: PI = atan(1.0d0) * 4.0d0                              ! Constante pi
-
-
 
      ! Type FDTD1D 
      type :: FDTD1D
