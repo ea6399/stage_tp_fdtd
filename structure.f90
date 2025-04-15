@@ -18,6 +18,7 @@ module structure
           procedure :: init 
           procedure :: calcule
           ! procedure :: resultat_stockage
+          procedure :: freeMemory
      end type FDTD1D
 
 
@@ -114,6 +115,49 @@ module structure
                END DO
           END DO 
      END SUBROUTINE calcule
+
+     SUBROUTINE resultat_stockage(fd, Nt, dt)
+          IMPLICIT NONE
+          class(FDTD1D), intent(inout) :: fd
+          INTEGER, intent(in) :: Nt
+          real(8), intent(in) :: dt
+
+          INTEGER :: i, n 
+          INTEGER :: idfile_E, idfile_H
+
+          ! Ouverture des fichiers de résultats
+          idfile_E = 20
+          idfile_H = 30
+          open(idfile_E, file="E_t.txt", status='replace', action='write', form = 'formatted')
+          open(idfile_H, file="H_t.txt", status='replace', action='write', form = 'formatted')
+
+          !Boucle sur le temps
+          DO n = 0, Nt - 1
+               ! Ecrit le temps et les résultats
+               write(idfile_E,*) n * dt, fd%Eres(n,1), fd%Eres(n,2), fd%Eres(n,3), fd%Eres(n,4)
+               write(idfile_H,*) n * dt, fd%Hres(n,1), fd%Hres(n,2), fd%Hres(n,3), fd%Hres(n,4)
+               write(idfile_E,*) !Saut de ligne
+               write(idfile_H,*) !Saut de ligne
+          END DO
+
+          ! Fermeture des fichiers
+          close(idfile_E)
+          close(idfile_H)
+          WRITE(*,'(/,T5,A,/)') "Stockage des résultats dans les fichiers terminée."
+     ENDSUBROUTINE resultat_stockage
+
+
+     subroutine freeMemory(fd)
+        class(FDTD1D), intent(inout) :: fd
+
+        if (allocated(fd%E))    deallocate(fd%E)
+        if (allocated(fd%H))    deallocate(fd%H)
+        if (allocated(fd%c_E))  deallocate(fd%c_E)
+        if (allocated(fd%c_H))  deallocate(fd%c_H)
+        if (allocated(fd%pres)) deallocate(fd%pres)
+        if (allocated(fd%Eres)) deallocate(fd%Eres)
+        if (allocated(fd%Hres)) deallocate(fd%Hres)
+    end subroutine freeMemory
 
 
 

@@ -32,6 +32,10 @@ PROGRAM FDTD_1D
 
       call calcule(fd, Nx, Nt, Esrc)
 
+      !call free_vectors()
+
+      call resultat_stockage(fd, Nt, dt)
+
 
 
 
@@ -66,6 +70,14 @@ PROGRAM FDTD_1D
             close(idfile)
 
       END SUBROUTINE display_gauss
+
+
+      subroutine free_vectors()
+            implicit none 
+
+            ! Libération de la mémoire
+            deallocate(Esrc, base_t)
+      end subroutine free_vectors
 
     
 
