@@ -23,7 +23,7 @@ $(EXEC): $(OBJECTS)
 
 # Clean up
 clean:
-	rm -f $(OBJECTS) $(EXEC) *.txt *.mod *.o
+	rm -f $(OBJECTS) $(EXEC) *.mod *.o
 
 # Phony targets
 .PHONY: all clean
