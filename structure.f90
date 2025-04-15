@@ -34,7 +34,7 @@ module structure
           class(FDTD1D), intent(inout) :: fd
           INTEGER, intent(in) :: Nx, Nt
 
-          fd%Nres = 4 ! Nombre de résultats
+          fd%Nres = 6 ! Nombre de résultats
 
           ALLOCATE(fd%pres(1 : fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
           ALLOCATE(fd%Eres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
@@ -44,7 +44,9 @@ module structure
           fd%pres(1) = 1
           fd%pres(2) = 100
           fd%pres(3) = 200
-          fd%pres(4) = Nx
+          fd%pres(4) = 300
+          fd%pres(5) = 400
+          fd%pres(6) = Nx
 
           ! Initialisation des tableaux de résultats
           fd%Eres = 0.0d0
@@ -91,9 +93,9 @@ module structure
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
 
-          DO n = 0, Nt - 1
+          DO n = 1, Nt - 1
                ! On applique la source
-               fd%E(0) = Esrc(n)
+               fd%E(0) = Esrc(n-1)
 
                ! Calcul spatial des champs E et H
                DO i = 1, Nx - 1
@@ -135,8 +137,8 @@ module structure
           !Boucle sur le temps
           DO n = 0, Nt - 1
                ! Ecrit le temps et les résultats
-               write(idfile_E,*) n * dt, fd%Eres(n,1), fd%Eres(n,2), fd%Eres(n,3), fd%Eres(n,4)
-               write(idfile_H,*) n * dt, fd%Hres(n,1), fd%Hres(n,2), fd%Hres(n,3), fd%Hres(n,4)
+               write(idfile_E,*) n * dt, fd%Eres(n,1), fd%Eres(n,2), fd%Eres(n,3), fd%Eres(n,4), fd%Eres(n,5), fd%Eres(n,6)
+               write(idfile_H,*) n * dt, fd%Hres(n,1), fd%Hres(n,2), fd%Hres(n,3), fd%Hres(n,4), fd%Hres(n,5), fd%Hres(n,6)
           END DO
 
           ! Fermeture des fichiers
