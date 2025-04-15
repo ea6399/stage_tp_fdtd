@@ -6,7 +6,7 @@ module source
             ! Fonction gaussienne
             FUNCTION gauss_t(n,dt)
                   IMPLICIT NONE
-                  ! Retour
+                  ! REour
                   REAL(8) :: gauss_t, dt
 
                   ! Arguments
@@ -15,11 +15,11 @@ module source
                   gauss_t = a0 * exp( - ( ( n * dt - t0 ) / T )**2 )
             ENDFUNCTION gauss_t
 
-            SUBROUTINE compute_gauss(et,base_t, Nt)
+            SUBROUTINE compute_gauss(E,base, Nt)
                   IMPLICIT NONE
                   ! Arguments
-                  REAL(8), intent(inout) :: base_t(LBD:UBD)
-                  REAL(8), intent(inout) :: et(LBD:UBD)
+                  REAL(8), intent(inout) :: base(LBD:UBD)
+                  REAL(8), intent(inout) :: E(LBD:UBD)
                   INTEGER, intent(in) :: Nt
 
                   ! Variables locales
@@ -30,12 +30,12 @@ module source
 
                   ! Intervalles de définition de la gaussienne temporelle
                   DO n = LBD, UBD
-                        base_t(n) = n * dt
+                        base(n) = n * dt
                   end do
 
                   ! Calcul de la gaussienne
                   DO n = LBD, UBD
-                        et(n) = gauss_t(n, dt)
+                        E(n) = gauss_t(n, dt)
                   END DO
             ENDSUBROUTINE compute_gauss
 

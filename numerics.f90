@@ -23,7 +23,7 @@ Module numerics
 
 
             ! Déclaration des matrices et vecteurs
-            REAL(8), DIMENSION(LBD:UBD) :: et, base_t
+            REAL(8), DIMENSION(LBD:UBD) :: Esrc, base_t
 
 
       CONTAINS

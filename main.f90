@@ -23,9 +23,11 @@ PROGRAM FDTD_1D
       call init(fd, Nx, dt, dx)
 
       !Initialisation gaussienne
-      call compute_gauss(et, base_t, Nt)
+      call compute_gauss(Esrc, base_t, Nt)
       ! Affichage de la gaussienne
-      CALL display_gauss("gauss.txt", et, base_t)
+      CALL display_gauss("gauss.txt", Esrc, base_t)
+
+      !call calcule(fd, Nx, Nt, Esrc)
 
 
 
