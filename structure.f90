@@ -11,7 +11,7 @@ module structure
           REAL(8), ALLOCATABLE :: E(:), H(:)                                          ! Champs E et H
           REAL(8), ALLOCATABLE :: c_E(:), c_H(:)                                      ! Coefficient E et H
           INTEGER :: Nres                                                             ! Nombre de résultats
-          INTEGER, ALLOCATABLE :: pres(:)                                                             ! Position du point d'observation pour chaque résultat
+          INTEGER, ALLOCATABLE :: pres(:)                                             ! Position du point d'observation pour chaque résultat
           REAL(8), ALLOCATABLE :: Eres(:,:), Hres(:,:)                                ! Tableau 2D hébergeant les résultats E et H
      CONTAINS    
           procedure :: resultat_init
@@ -64,7 +64,7 @@ module structure
           INTEGER, intent(in) :: Nx
           REAL(8), intent(in) :: dt, dx
 
-          ALLOCATE( fd%E(Nx + 1), fd%H(Nx + 1), fd%c_E(Nx + 1), fd%c_H(Nx + 1)) ! Allocation de la mémoire pour les champs E et H
+          ALLOCATE( fd%E(0 : Nx), fd%H(0 : Nx), fd%c_E(0 : Nx), fd%c_H(0 : Nx)) ! Allocation de la mémoire pour les champs E et H
           WRITE(*,'(/,T5,A,ES10.3,/)') "dt = ", dt
 
           ! Initialiation des champs E et H ainsi que des coefficients
@@ -91,17 +91,28 @@ module structure
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
 
-          
+          DO n = 0, Nt - 1
+               ! On applique la source
+               fd%E(0) = Esrc(n)
+               ! Calcul spatial des champs E et H
+               DO i = 1, Nx
+                    ! Calcule 
+                    fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
+                    !print *, "E(",i,") = ", fd%E(i)
+               END DO
+               DO i = 0, Nx - 1 
+                    ! Calcule 
+                    fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
+                    !print *, "H(",i,") = ", fd%H(i)
+               END DO
 
-          ! DO n = 0, Nt - 1
-          !      DO i = 0, Nx
-          !           ! On calcule d'abord le champ magnétique puis le champ électrique
-
-          !      END DO
-          ! END DO 
-
-
-
+               DO i = 1, fd%Nres
+                    ! On stocke les résultats
+                    !print *, i
+                    fd%Eres(n, i) = fd%E(fd%pres(i))
+                    fd%Hres(n, i) = fd%H(fd%pres(i))
+               END DO
+          END DO 
      END SUBROUTINE calcule
 
 
