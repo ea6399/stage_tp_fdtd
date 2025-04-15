@@ -14,7 +14,7 @@ Module numerics
             REAL(8), PARAMETER :: att0     = 1000.0d0
             REAL(8), PARAMETER :: a0       = 1.0d0
             REAL(8), PARAMETER :: T        = sqrt(log(attfmax)) / (PI * fmax)
-            REAL(8), PARAMETER :: t0       = T * sqrt(log(att0))
+            REAL(8), PARAMETER :: t0       =  15 * T * sqrt(log(att0))
             REAL(8), PARAMETER :: dx       = (c / fmax) / 30.0d0
             REAL(8), PARAMETER :: dt       = 0.98d0 * dx / c
             INTEGER, PARAMETER :: LBD      = 0

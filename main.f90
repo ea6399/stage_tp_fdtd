@@ -1,33 +1,31 @@
 PROGRAM FDTD_1D
-    use numerics
-    use structure
-    use source
+      use numerics
+      use structure
+      use source
 
-    IMPLICIT NONE
-    ! Classe FDTD1D
-    type(FDTD1D) :: fd
-
-
+      IMPLICIT NONE
+      ! Classe FDTD1D
+      type(FDTD1D) :: fd
 
 
 
 
-    !----------------------------------------!
-    ! 1D FDTD simulation of a Gaussian pulse !
-    !----------------------------------------!
-
-    ! Initialisation des résultats
-    call resultat_init(fd, Nx, Nt)
-    
-    ! Initialisation des champs
-    call init(fd, Nx, dt, dx)
-
-    !Initialisation gaussienne
-    call compute_gauss(et, base_t, Nt)
-
-    CALL display_gauss("gauss.txt", et, base_t)
 
 
+      !----------------------------------------!
+      ! 1D FDTD simulation of a Gaussian pulse !
+      !----------------------------------------!
+
+      ! Initialisation des résultats
+      call resultat_init(fd, Nx, Nt)
+      
+      ! Initialisation des champs
+      call init(fd, Nx, dt, dx)
+
+      !Initialisation gaussienne
+      call compute_gauss(et, base_t, Nt)
+      ! Affichage de la gaussienne
+      CALL display_gauss("gauss.txt", et, base_t)
 
 
 
@@ -39,7 +37,9 @@ PROGRAM FDTD_1D
 
 
 
-    CONTAINS
+
+
+      CONTAINS
 
       ! Ecriture des résultats dans un fichier
       SUBROUTINE display_gauss(file_name, e, base)

@@ -35,7 +35,7 @@ module source
 
                   ! Calcul de la gaussienne
                   DO n = LBD, UBD
-                        et(n) = gauss_t(n, base_t(n))
+                        et(n) = gauss_t(n, dt)
                   END DO
             ENDSUBROUTINE compute_gauss
 
