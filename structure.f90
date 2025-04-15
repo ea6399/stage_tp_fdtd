@@ -89,7 +89,18 @@ module structure
           INTEGER :: i, n
           REAL(8), ALLOCATABLE :: Esrc(:)
 
-          print *, "debut"
+          WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
+
+          
+
+          ! DO n = 0, Nt - 1
+          !      DO i = 0, Nx
+          !           ! On calcule d'abord le champ magnétique puis le champ électrique
+
+          !      END DO
+          ! END DO 
+
+
 
      END SUBROUTINE calcule
 
