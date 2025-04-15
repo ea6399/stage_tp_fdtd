@@ -37,8 +37,8 @@ module structure
           fd%Nres = 4 ! Nombre de résultats
 
           ALLOCATE(fd%pres(1 : fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
-          ALLOCATE(fd%Eres(Nt,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
-          ALLOCATE(fd%Hres(Nt,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats H, champs magnétique
+          ALLOCATE(fd%Eres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
+          ALLOCATE(fd%Hres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats H, champs magnétique
 
           ! Initialisation des positions de résultats
           fd%pres(1) = 1
@@ -96,12 +96,12 @@ module structure
                fd%E(0) = Esrc(n)
 
                ! Calcul spatial des champs E et H
-               DO i = 1, Nx
+               DO i = 1, Nx - 1
                     ! Calcule 
                     fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
                     !print *, "E(",i,") = ", fd%E(i)
                END DO
-               
+
                DO i = 0, Nx - 1 
                     ! Calcule 
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
