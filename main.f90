@@ -7,6 +7,9 @@ PROGRAM FDTD_1D
       ! Classe FDTD1D
       type(FDTD1D) :: fd
 
+      ! Initialisation de vecteurs
+      call init_vectors()
+
 
 
 
@@ -27,7 +30,7 @@ PROGRAM FDTD_1D
       ! Affichage de la gaussienne
       CALL display_gauss("gauss.txt", Esrc, base_t)
 
-      !call calcule(fd, Nx, Nt, Esrc)
+      call calcule(fd, Nx, Nt, Esrc)
 
 
 

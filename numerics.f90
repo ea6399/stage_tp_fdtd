@@ -23,8 +23,13 @@ Module numerics
 
 
             ! Déclaration des matrices et vecteurs
-            REAL(8), DIMENSION(LBD:UBD) :: Esrc, base_t
+            REAL(8), ALLOCATABLE, DIMENSION(:) :: Esrc, base_t
 
 
       CONTAINS
+
+            subroutine init_vectors()
+                  ! Allocation des vecteurs
+                  ALLOCATE(Esrc(LBD:UBD), base_t(LBD:UBD))
+            end subroutine init_vectors
 end module numerics
