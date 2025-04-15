@@ -17,8 +17,7 @@ module structure
           procedure :: resultat_init
           procedure :: init 
           procedure :: calcule
-          ! procedure :: resultat_stockage
-          procedure :: freeMemory
+          procedure :: resultat_stockage
      end type FDTD1D
 
 
@@ -95,12 +94,14 @@ module structure
           DO n = 0, Nt - 1
                ! On applique la source
                fd%E(0) = Esrc(n)
+
                ! Calcul spatial des champs E et H
                DO i = 1, Nx
                     ! Calcule 
                     fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
                     !print *, "E(",i,") = ", fd%E(i)
                END DO
+               
                DO i = 0, Nx - 1 
                     ! Calcule 
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
@@ -143,19 +144,6 @@ module structure
           close(idfile_H)
           WRITE(*,'(/,T5,A,/)') "Stockage des résultats dans les fichiers terminée."
      ENDSUBROUTINE resultat_stockage
-
-
-     subroutine freeMemory(fd)
-        class(FDTD1D), intent(inout) :: fd
-
-        if (allocated(fd%E))    deallocate(fd%E)
-        if (allocated(fd%H))    deallocate(fd%H)
-        if (allocated(fd%c_E))  deallocate(fd%c_E)
-        if (allocated(fd%c_H))  deallocate(fd%c_H)
-        if (allocated(fd%pres)) deallocate(fd%pres)
-        if (allocated(fd%Eres)) deallocate(fd%Eres)
-        if (allocated(fd%Hres)) deallocate(fd%Hres)
-    end subroutine freeMemory
 
 
 

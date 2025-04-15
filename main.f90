@@ -27,23 +27,15 @@ PROGRAM FDTD_1D
 
       !Initialisation gaussienne
       call compute_gauss(Esrc, base_t, Nt)
+
       ! Affichage de la gaussienne
       CALL display_gauss("gauss.txt", Esrc, base_t)
 
+      ! Calcul des champs E et H
       call calcule(fd, Nx, Nt, Esrc)
 
-      !call free_vectors()
-
+      ! Stockage des résultats
       call resultat_stockage(fd, Nt, dt)
-
-
-
-
-
-
-
-
-
 
 
 
@@ -70,20 +62,6 @@ PROGRAM FDTD_1D
             close(idfile)
 
       END SUBROUTINE display_gauss
-
-
-      subroutine free_vectors()
-            implicit none 
-
-            ! Libération de la mémoire
-            deallocate(Esrc, base_t)
-      end subroutine free_vectors
-
-    
-
-    
-
-    
 
 
 END PROGRAM FDTD_1D
