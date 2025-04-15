@@ -136,8 +136,6 @@ module structure
                ! Ecrit le temps et les résultats
                write(idfile_E,*) n * dt, fd%Eres(n,1), fd%Eres(n,2), fd%Eres(n,3), fd%Eres(n,4)
                write(idfile_H,*) n * dt, fd%Hres(n,1), fd%Hres(n,2), fd%Hres(n,3), fd%Hres(n,4)
-               write(idfile_E,*) !Saut de ligne
-               write(idfile_H,*) !Saut de ligne
           END DO
 
           ! Fermeture des fichiers

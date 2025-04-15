@@ -24,7 +24,6 @@ set style line 2 \
     linecolor rgb "red"
 
 # Format des données 
-# Exemple: colonne 1 = temps, colonne 2 = signal
 plot "E_t.txt" using 1:2 with lines ls 1 title "Champs électrique", \
      "H_t.txt" using 1:2 with lines ls 2 title "Champs magnétique"
 
