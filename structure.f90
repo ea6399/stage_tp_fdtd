@@ -101,11 +101,10 @@ module structure
                ! On applique la source
                fd%E(0) = Esrc(n)
 
-               ! Calcul spatial des champs E et H
-               if (n == Nt - 2 ) then
-                    Etemp1 = fd%E(Nx)
-                    Etemp2 = fd%E(Nx - 1)
-               end if
+               ! Condition de Mur
+               Etemp1 = fd%E(Nx)
+               Etemp2 = fd%E(Nx - 1)
+               
                DO i = 1, Nx
                     ! Calcule de E(n)
                     if (i < Nx) then
