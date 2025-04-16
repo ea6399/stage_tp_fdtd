@@ -18,6 +18,7 @@ module structure
           procedure :: init 
           procedure :: calcule
           procedure :: resultat_stockage
+          procedure :: freememory
      end type FDTD1D
 
 
@@ -146,7 +147,19 @@ module structure
           close(idfile_H)
           WRITE(*,'(/,T5,A,/)') "Stockage des résultats dans les fichiers terminée."
      ENDSUBROUTINE resultat_stockage
+     
 
+     subroutine freeMemory(fd)
+          class(FDTD1D), intent(inout) :: fd
+
+          if (allocated(fd%E))    deallocate(fd%E)
+          if (allocated(fd%H))    deallocate(fd%H)
+          if (allocated(fd%c_E))  deallocate(fd%c_E)
+          if (allocated(fd%c_H))  deallocate(fd%c_H)
+          if (allocated(fd%pres)) deallocate(fd%pres)
+          if (allocated(fd%Eres)) deallocate(fd%Eres)
+          if (allocated(fd%Hres)) deallocate(fd%Hres)
+     end subroutine freeMemory
 
 
 
