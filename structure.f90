@@ -88,24 +88,28 @@ module structure
           class(FDTD1D), intent(inout) :: fd
           INTEGER :: Nt, Nx
           INTEGER :: i, n
-          REAL(8), ALLOCATABLE :: Esrc(:)
+          REAL(8), ALLOCATABLE :: Esrc(:) ! [0, Nt - 1 ] : source temporelle
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
 
-          DO n = 1, Nt - 1
+
+          DO n = 0, Nt - 1
                ! On applique la source
-               fd%E(0) = Esrc(n-1)
+               fd%E(0) = Esrc(n)
 
                ! Calcul spatial des champs E et H
-               DO i = 1, Nx - 1
-                    ! Calcule de E(n+1)
+               DO i = 1, Nx
+                    ! Calcule de E au temps n
                     fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
-               END DO
-               DO i = 0, Nx - 1
                     ! Calcule de H(n+1)
+               END DO 
+
+               DO i = 0, Nx - 1 
+                    ! Calcule de H au temps n
+                    ! Conditions de Diricghlet : H(Nx) = 0
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
                END DO
-
+               
                DO i = 1, fd%Nres
                     ! On stocke les résultats
                     fd%Eres(n, i) = fd%E(fd%pres(i))
