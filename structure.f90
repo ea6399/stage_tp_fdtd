@@ -114,6 +114,7 @@ module structure
                          fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
                     end if
                END DO
+               
                DO i = 0, Nx - 1
                     ! Calcule de H(n)
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
