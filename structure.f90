@@ -101,14 +101,13 @@ module structure
                DO i = 1, Nx
                     ! Calcule de E au temps n
                     fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
-                    ! Calcule de H(n+1)
                END DO 
 
                DO i = 0, Nx - 1 
                     ! Calcule de H au temps n
-                    ! Conditions de Diricghlet : H(Nx) = 0
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
                END DO
+               ! condition au bord
                fd%H(Nx) = fd%H(Nx - 1)
                
                DO i = 1, fd%Nres
