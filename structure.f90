@@ -97,9 +97,9 @@ module structure
           Etemp1 = 0.0d0
           Etemp2 = 0.0d0 
 
-          DO n = 1, Nt - 1
+          DO n = 0, Nt - 1
                ! On applique la source
-               fd%E(0) = Esrc(n-1)
+               fd%E(0) = Esrc(n)
 
                ! Calcul spatial des champs E et H
                if (n == Nt - 2 ) then
@@ -107,19 +107,21 @@ module structure
                     Etemp2 = fd%E(Nx - 1)
                end if
                DO i = 1, Nx
-                    ! Calcule de E(n+1)
-                    if (i < Nx - 1) then
+                    ! Calcule de E(n)
+                    if (i < Nx) then
                          fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
                     else
                          boundary_coef = (c * dt - dx) / (c * dt + dx)
                          fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
                     end if
                END DO
-               DO i = 0, Nx
-                    ! Calcule de H(n+1)
+               DO i = 0, Nx - 1
+                    ! Calcule de H(n)
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
-                    !print *, "H(",i,") = ", fd%H(i)
                END DO
+               ! Condition au bord pour le champ magnétique
+               fd%H(Nx) = fd%H(Nx-1)
+
 
                DO i = 1, fd%Nres
                     ! On stocke les résultats
