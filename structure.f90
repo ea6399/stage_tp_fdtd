@@ -63,6 +63,7 @@ module structure
           class(FDTD1D), intent(inout) :: fd
           INTEGER, intent(in) :: Nx
           REAL(8), intent(in) :: dt, dx
+          INTEGER :: k
 
           ALLOCATE( fd%E(0 : Nx), fd%H(0 : Nx), fd%c_E(0 : Nx), fd%c_H(0 : Nx)) ! Allocation de la mémoire pour les champs E et H
           WRITE(*,'(/,T5,A,ES10.3,/)') "dt = ", dt
@@ -70,10 +71,18 @@ module structure
           ! Initialiation des champs E et H ainsi que des coefficients
           fd%E = 0.0d0
           fd%H = 0.0d0
-          fd%c_E = dt / (epsilon_0 * dx)
+          ! Mix media
+          do k = 0, 300
+               fd%c_E = dt / (epsilon_0 * dx)
+          end do
+
+          do k = 301, Nx
+               fd%c_E = dt / (epsilon_0 * dx)
+          end do
+
           fd%c_H = dt / (mu_0 * dx)
 
-          PRINT *, "c_E(0) =", fd%c_E(0)
+          PRINT *, "c_E(0) =", fd%c_E(0), "c_E(301) =", fd%c_E(301)
           PRINT *, "C_h(0) =", fd%c_H(0)
 
           WRITE(*,'(/,T5,A,/)') "Initialisation des champs ainsi que des coefficents terminée."
