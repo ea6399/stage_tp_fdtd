@@ -77,7 +77,7 @@ module structure
           end do
 
           do k = 301, Nx
-               fd%c_E = dt / (epsilon_0 * dx)
+               fd%c_E = dt / (epsilon_r * dx)
           end do
 
           fd%c_H = dt / (mu_0 * dx)
