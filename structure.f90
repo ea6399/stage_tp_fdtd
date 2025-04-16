@@ -34,21 +34,18 @@ module structure
           IMPLICIT NONE
           class(FDTD1D), intent(inout) :: fd
           INTEGER, intent(in) :: Nx, Nt
+          INTEGER :: i
 
-          fd%Nres = 6 ! Nombre de résultats
+          fd%Nres = 10 ! Nombre de résultats
 
           ALLOCATE(fd%pres(1 : fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
           ALLOCATE(fd%Eres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
           ALLOCATE(fd%Hres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats H, champs magnétique
 
           ! Initialisation des positions de résultats
-          fd%pres(1) = 1
-          fd%pres(2) = 100
-          fd%pres(3) = 200
-          fd%pres(4) = 300
-          fd%pres(5) = 400
-          fd%pres(6) = Nx
-
+          Do i = 1, fd%Nres
+               fd%pres(i) = int( i *  Nx / fd%Nres ) ! Position de l'observation 
+          END DO
           ! Initialisation des tableaux de résultats
           fd%Eres = 0.0d0
           fd%Hres = 0.0d0
@@ -106,8 +103,8 @@ module structure
 
                ! Calcul spatial des champs E et H
                if (n == Nt - 2 ) then
-                    Etemp1 = fd%E(Nx - 1)
-                    Etemp2 = fd%E(Nx - 2)
+                    Etemp1 = fd%E(Nx)
+                    Etemp2 = fd%E(Nx - 1)
                end if
                DO i = 1, Nx
                     ! Calcule de E(n+1)
@@ -148,12 +145,11 @@ module structure
           open(idfile_E, file="E_t.txt", status='replace', action='write', form = 'formatted')
           open(idfile_H, file="H_t.txt", status='replace', action='write', form = 'formatted')
 
-          !Boucle sur le temps
-          DO n = 0, Nt - 1
-               ! Ecrit le temps et les résultats
-               write(idfile_E,*) n * dt, fd%Eres(n,1), fd%Eres(n,2), fd%Eres(n,3), fd%Eres(n,4), fd%Eres(n,5), fd%Eres(n,6)
-               write(idfile_H,*) n * dt, fd%Hres(n,1), fd%Hres(n,2), fd%Hres(n,3), fd%Hres(n,4), fd%Hres(n,5), fd%Hres(n,6)
-          END DO
+            ! Boucle sur le temps et sur les colonnes de résultats
+            DO n = 0, Nt - 1
+                  write(idfile_E,*) n * dt, (fd%Eres(n, i), i = 1, fd%Nres)
+                  write(idfile_H,*) n * dt, (fd%Hres(n, i), i = 1, fd%Nres)
+            END DO
 
           ! Fermeture des fichiers
           close(idfile_E)
