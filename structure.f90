@@ -91,20 +91,34 @@ module structure
           INTEGER :: Nt, Nx
           INTEGER :: i, n
           REAL(8), ALLOCATABLE :: Esrc(:)
+          REAL(8) :: boundary_coef
+          REAL(8) :: Etemp1, Etemp2
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
+
+          boundary_coef = 0.0d0
+          Etemp1 = 0.0d0
+          Etemp2 = 0.0d0 
 
           DO n = 1, Nt - 1
                ! On applique la source
                fd%E(0) = Esrc(n-1)
 
                ! Calcul spatial des champs E et H
-               DO i = 1, Nx - 1
+               if (n == Nt - 2 ) then
+                    Etemp1 = fd%E(Nx - 1)
+                    Etemp2 = fd%E(Nx - 2)
+               end if
+               DO i = 1, Nx
                     ! Calcule de E(n+1)
-                    fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
-                    !print *, "E(",i,") = ", fd%E(i)
+                    if (i < Nx - 1) then
+                         fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
+                    else
+                         boundary_coef = (c * dt - dx) / (c * dt + dx)
+                         fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
+                    end if
                END DO
-               DO i = 0, Nx - 1
+               DO i = 0, Nx
                     ! Calcule de H(n+1)
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
                     !print *, "H(",i,") = ", fd%H(i)
