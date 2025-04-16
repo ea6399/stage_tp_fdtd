@@ -20,10 +20,10 @@ PROGRAM FDTD_1D
       !----------------------------------------!
 
       ! Initialisation des résultats
-      call resultat_init(fd, Nx, Nt)
+      call fd%resultat_init( Nx, Nt)
       
       ! Initialisation des champs
-      call init(fd, Nx, dt, dx)
+      call fd%init(Nx, dt, dx)
 
       !Initialisation gaussienne
       call compute_gauss(Esrc, base_t, Nt)
@@ -32,10 +32,10 @@ PROGRAM FDTD_1D
       CALL display_gauss("gauss.txt", Esrc, base_t)
 
       ! Calcul des champs E et H
-      call calcule(fd, Nx, Nt, Esrc)
+      call fd%calcule(Nx, Nt, Esrc)
 
       ! Stockage des résultats
-      call resultat_stockage(fd, Nt, dt)
+      call fd%resultat_stockage(Nt, dt)
 
       ! Libération de la mémoire
       DEALLOCATE(Esrc)
