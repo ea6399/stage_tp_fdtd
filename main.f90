@@ -40,7 +40,10 @@ PROGRAM FDTD_1D
       ! Libération de la mémoire
       DEALLOCATE(Esrc)
       DEALLOCATE(base_t)
-      !test
+      ! Dans le type FDTD1D
+      call fd%freeMemory()
+      WRITE(*, '(/,T5,A,/)') "Libération de la mémoire terminée."
+
 
 
       CONTAINS
