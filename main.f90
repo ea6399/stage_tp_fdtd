@@ -37,20 +37,7 @@ PROGRAM FDTD_1D
       ! Stockage des résultats
       call resultat_stockage(fd, Nt, dt)
 
-       ! Libération de la mémoire
-       DEALLOCATE(E)
-      ! DEALLOCATE(fd%H)
-      ! DEALLOCATE(fd%Eres)
-      ! DEALLOCATE(fd%Hres)
-      ! DEALLOCATE(fd%c_E)
-      ! DEALLOCATE(fd%c_H)
-      ! DEALLOCATE(fd%pres)
-      ! DEALLOCATE(fd%Nres)
-      DEALLOCATE(Esrc)
-      DEALLOCATE(base_t)
-     
-
-
+      
 
 
       CONTAINS
