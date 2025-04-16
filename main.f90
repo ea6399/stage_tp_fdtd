@@ -37,7 +37,9 @@ PROGRAM FDTD_1D
       ! Stockage des résultats
       call resultat_stockage(fd, Nt, dt)
 
-      
+      ! Libération de la mémoire
+      DEALLOCATE(Esrc)
+      DEALLOCATE(base_t)
 
 
       CONTAINS
