@@ -109,6 +109,7 @@ module structure
                     ! Conditions de Diricghlet : H(Nx) = 0
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
                END DO
+               fd%H(Nx) = fd%H(Nx - 1)
                
                DO i = 1, fd%Nres
                     ! On stocke les résultats
