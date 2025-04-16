@@ -102,17 +102,14 @@ module structure
                DO i = 1, Nx - 1
                     ! Calcule de E(n+1)
                     fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
-                    !print *, "E(",i,") = ", fd%E(i)
                END DO
                DO i = 0, Nx - 1
                     ! Calcule de H(n+1)
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
-                    !print *, "H(",i,") = ", fd%H(i)
                END DO
 
                DO i = 1, fd%Nres
                     ! On stocke les résultats
-                    !print *, i
                     fd%Eres(n, i) = fd%E(fd%pres(i))
                     fd%Hres(n, i) = fd%H(fd%pres(i))
                END DO
