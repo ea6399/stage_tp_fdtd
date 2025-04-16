@@ -1,7 +1,7 @@
 Module numerics
 ! Déclaration de variables à portée globale
       IMPLICIT NONE 
-            INTEGER, PARAMETER :: Nt = 1000                                             ! Nombre d'échantillons en temps
+            INTEGER, PARAMETER :: Nt = 800                                             ! Nombre d'échantillons en temps
             INTEGER, PARAMETER :: Nx = 500                                              ! Nombre d'échantillons en espace
             REAL(8), PARAMETER :: epsilon_0 = 8.854187817e-12                           ! Permittivité du vide
             REAL(8), PARAMETER :: mu_0 = 1.256637061e-7                                 ! Perméabilité du vide
@@ -17,8 +17,8 @@ Module numerics
             REAL(8), PARAMETER :: t0       = T * sqrt(log(att0))
             REAL(8), PARAMETER :: dx       = (c / fmax) / 30.0d0
             REAL(8), PARAMETER :: dt       = 0.98d0 * dx / c
-            INTEGER, PARAMETER :: LBD      = 0
-            INTEGER, PARAMETER :: UBD      = Nt - 1
+            INTEGER, PARAMETER :: LBD      = 0                                            ! Borne inférieure
+            INTEGER, PARAMETER :: UBD      = Nt - 1                                       ! Borne supérieure
             INTEGER, PARAMETER :: idfile   = 10
 
 
