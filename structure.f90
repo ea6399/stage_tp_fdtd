@@ -36,7 +36,10 @@ module structure
           INTEGER, intent(in) :: Nx, Nt
           INTEGER :: i
 
-          fd%Nres = 10 ! Nombre de résultats
+          ! Initialisation des positions de résultats
+          Do i = 1, fd%Nres
+               fd%pres(i) = i ! Position du point d'observation
+          END DO
 
           ALLOCATE(fd%pres(1 : fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
           ALLOCATE(fd%Eres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
