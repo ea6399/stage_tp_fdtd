@@ -129,7 +129,7 @@ module structure
 
           ! Ouverture des fichiers de résultats
           idfile_E = 20
-          idfile_H = 20000
+          idfile_H = 200000
 
           open(idfile_E, file="E_t.txt", status='replace', action='write', form = 'formatted')
           open(idfile_H, file="H_t.txt", status='replace', action='write', form = 'formatted')
