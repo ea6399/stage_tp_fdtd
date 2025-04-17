@@ -13,6 +13,8 @@ PROGRAM FDTD_1D
       ! Temps de propagation de l'onde 
       WRITE(*,'(/,T5,A,ES10.3,/)') "Temps Tmax de propagation de l'onde : ", dt * Nt
 
+      Write(*,'(/,T5,A,ES10.3,/)') "Intervalle d'intégration : ", dx * Nx
+
 
 
 

@@ -98,11 +98,6 @@ module structure
                ! On applique la source
                fd%E(0) = Esrc(n)
 
-               ! Calcul spatial des champs E et H
-               DO i = 1, Nx
-                    ! Calcule de E au temps n
-                    fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
-               END DO 
 
                DO i = 0, Nx - 1 
                     ! Calcule de H au temps n
@@ -110,7 +105,14 @@ module structure
                END DO
                ! condition au bord
                fd%H(Nx) = fd%H(Nx - 1)
-               
+
+               ! Calcul spatial des champs E et H
+               DO i = 1, Nx
+                    ! Calcule de E au temps n
+                    fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
+               END DO 
+
+
                DO i = 1, fd%Nres
                     ! On stocke les résultats
                     fd%Eres(n, i) = fd%E(fd%pres(i))
