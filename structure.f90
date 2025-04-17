@@ -36,10 +36,7 @@ module structure
           INTEGER, intent(in) :: Nx, Nt
           INTEGER :: i
 
-          ! Initialisation des positions de résultats
-          Do i = 1, fd%Nres
-               fd%pres(i) = i ! Position du point d'observation
-          END DO
+          fd%Nres = Nx
 
           ALLOCATE(fd%pres(1 : fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
           ALLOCATE(fd%Eres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
@@ -47,7 +44,12 @@ module structure
 
           ! Initialisation des positions de résultats
           Do i = 1, fd%Nres
-               fd%pres(i) = int( i *  Nx / fd%Nres ) ! Position de l'observation 
+               fd%pres(i) = i ! Position du point d'observation
+          END DO
+
+          ! Initialisation des positions de résultats
+          Do i = 1, fd%Nres
+               fd%pres(i) = i ! Position du point d'observation
           END DO
           ! Initialisation des tableaux de résultats
           fd%Eres = 0.0d0
@@ -70,17 +72,18 @@ module structure
 
           ALLOCATE( fd%E(0 : Nx), fd%H(0 : Nx), fd%c_E(0 : Nx), fd%c_H(0 : Nx)) ! Allocation de la mémoire pour les champs E et H
           WRITE(*,'(/,T5,A,ES10.3,/)') "dt = ", dt
+          WRITE(*,'(/,T5,A,ES10.3,/)') "dx = ", dx
 
           ! Initialiation des champs E et H ainsi que des coefficients
           fd%E = 0.0d0
           fd%H = 0.0d0
           ! Mix media
           do k = 0, 300
-               fd%c_E = dt / (epsilon_0 * dx)
+               fd%c_E(k) = dt / (epsilon_0 * dx)
           end do
 
           do k = 301, Nx
-               fd%c_E = dt / (epsilon_r * dx)
+               fd%c_E(k) = dt / (4.D0 * epsilon_0 * dx)
           end do
 
           fd%c_H = dt / (mu_0 * dx)
@@ -104,6 +107,8 @@ module structure
           REAL(8) :: Etemp1, Etemp2
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
+
+          WRITE(*, '(/,T5,A,I4,/)') "Nombre de points d'espace : ", Nx
 
           boundary_coef = 0.0d0
           Etemp1 = 0.0d0
