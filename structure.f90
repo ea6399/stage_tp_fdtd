@@ -91,6 +91,7 @@ module structure
           REAL(8), ALLOCATABLE :: Esrc(:) ! [0, Nt - 1 ] : source temporelle
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
+          WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations spatiales : ", Nx
 
 
           DO n = 0, Nt - 1
