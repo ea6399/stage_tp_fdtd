@@ -105,13 +105,6 @@ module structure
                ! Condition de Mur
                Etemp1 = fd%E(Nx)
                Etemp2 = fd%E(Nx - 1)
-
-               DO i = 0, Nx - 1
-                    ! Calcule de H(n)
-                    fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
-               END DO
-               ! Condition au bord pour le champ magnétique
-               fd%H(Nx) = fd%H(Nx-1)
                
                DO i = 1, Nx
                     ! Calcule de E(n)
@@ -122,6 +115,13 @@ module structure
                          fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
                     end if
                END DO
+
+               DO i = 0, Nx - 1
+                    ! Calcule de H(n)
+                    fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
+               END DO
+               ! Condition au bord pour le champ magnétique
+               fd%H(Nx) = fd%H(Nx-1)
 
 
                DO i = 1, fd%Nres
