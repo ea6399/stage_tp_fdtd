@@ -36,7 +36,7 @@ module structure
           INTEGER, intent(in) :: Nx, Nt
           INTEGER :: i
 
-          fd%Nres = 10 ! Nombre de résultats
+          fd%Nres = Nx ! Nombre de résultats
 
           ALLOCATE(fd%pres(1 : fd%Nres)) ! Allocation de la mémoire pour le tableau de positions
           ALLOCATE(fd%Eres(0 : Nt - 1,fd%Nres)) ! Allocation de la mémoire pour le tableau de résultats E, champs éléctrique
@@ -44,7 +44,7 @@ module structure
 
           ! Initialisation des positions de résultats
           Do i = 1, fd%Nres
-               fd%pres(i) = int( i *  Nx / fd%Nres ) ! Position de l'observation 
+               fd%pres(i) = i ! Position du point d'observation
           END DO
 
           ! Initialisation des tableaux de résultats
@@ -129,7 +129,8 @@ module structure
 
           ! Ouverture des fichiers de résultats
           idfile_E = 20
-          idfile_H = 30
+          idfile_H = 20000
+
           open(idfile_E, file="E_t.txt", status='replace', action='write', form = 'formatted')
           open(idfile_H, file="H_t.txt", status='replace', action='write', form = 'formatted')
 
