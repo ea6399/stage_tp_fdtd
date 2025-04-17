@@ -1,3 +1,4 @@
+set terminal pngcairo enhanced size 800,600
 set output "frames/frame_%05d.png"  
 set xlabel "Position"
 set ylabel "Amplitude"
