@@ -10,6 +10,9 @@ PROGRAM FDTD_1D
       ! Initialisation de vecteurs
       call init_vectors()
 
+      ! Temps de propagation de l'onde 
+      WRITE(*,'(/,T5,A,ES10.3,/)') "Temps Tmax de propagation de l'onde : ", dt * Nt
+
 
 
 
