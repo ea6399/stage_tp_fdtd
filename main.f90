@@ -6,7 +6,8 @@ PROGRAM FDTD_1D
       IMPLICIT NONE
       ! Classe FDTD1D
       type(FDTD1D) :: fd
-      real(8) :: R
+      real(8) :: R, e_max, e_min, T_trms
+      INTEGER :: pos
 
       ! Initialisation de vecteurs
       call init_vectors()
@@ -38,11 +39,22 @@ PROGRAM FDTD_1D
       ! Stockage des résultats
       call fd%resultat_stockage(Nt, dt)
 
-      ! Affichage reflexion et transmission
-      R = 1 - sqrt(4.d0 * epsilon_0)
-      R = R / (1 + sqrt(4.d0 * epsilon_0))
-      CALL reflexion(R)
-      CALL transmission(R)
+      pos = 50 
+      write(*, '(/,T5,A,I3,/)') "Position de l'observateur : ", pos
+      ! CALL reflexion(R)
+      ! CALL transmission(R)
+      e_max = maxval(fd%Eres(:,pos))
+      e_min = minval(fd%Eres(:,pos))
+      R = e_min/e_max
+      write(*, '(/,T5,A,F17.14,/)') "reflexion : ", abs(R)
+
+      call fresnel_reflexion()
+
+      T_trms = 1.d0 + R
+      write(*, '(/,T5,A,F17.14,/)') "Transmission : ", T_trms
+
+      call fresnel_transmission()
+
 
 
       ! Libération de la mémoire
@@ -77,20 +89,27 @@ PROGRAM FDTD_1D
 
       END SUBROUTINE display_gauss
 
-      subroutine reflexion(R)
-            REAL(8), intent(in) :: R
+      subroutine fresnel_reflexion()
+            implicit none       
+            Real(8) :: R
 
-            write(*, '(/,T5,A,ES10.3,/)') "Reflexion de la gaussienne temporelle :", R
+            R = 1 - sqrt(4.D0)
+            R = R / (1 + sqrt(4.D0))
+            Write(*, '(/,T5,A,F17.14,/)') "Fresnel Reflexion : ", abs(R)
+      end subroutine fresnel_reflexion
 
-      end subroutine reflexion
+      subroutine fresnel_transmission()
+            ! Variables Arguments 
+            implicit none
+            Real(8) :: R
+            Real(8) :: T
 
-      subroutine transmission(R)
-            ! Variables locales     
-            REAL(8), intent(in) :: R        
-                                                           ! T = 1 + R
-            write(*, '(/,T5,A,ES10.3,/)') "Transmission de la gaussienne temporelle :", 1.d0 + R
+            R = 1 - sqrt(4.D0)
+            R = R / (1 + sqrt(4.D0))
+            T = 1.d0 + R                                               ! T = 1 + R
+            write(*, '(/,T5,A,F17.14,/)') "Fresnel Transmission : ", T
 
-      end subroutine transmission   
+      end subroutine fresnel_transmission  
 
 
 END PROGRAM FDTD_1D
