@@ -140,6 +140,7 @@ module structure
           END DO 
      END SUBROUTINE calcule
 
+
      SUBROUTINE resultat_stockage(fd, Nt, dt)
           IMPLICIT NONE
           class(FDTD1D), intent(inout) :: fd

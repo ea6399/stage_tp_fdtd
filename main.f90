@@ -6,6 +6,7 @@ PROGRAM FDTD_1D
       IMPLICIT NONE
       ! Classe FDTD1D
       type(FDTD1D) :: fd
+      real(8) :: R
 
       ! Initialisation de vecteurs
       call init_vectors()
@@ -36,6 +37,13 @@ PROGRAM FDTD_1D
 
       ! Stockage des résultats
       call fd%resultat_stockage(Nt, dt)
+
+      ! Affichage reflexion et transmission
+      R = 1 - sqrt(4.d0 * epsilon_0)
+      R = R / (1 + sqrt(4.d0 * epsilon_0))
+      CALL reflexion(R)
+      CALL transmission(R)
+
 
       ! Libération de la mémoire
       DEALLOCATE(Esrc)
@@ -68,6 +76,21 @@ PROGRAM FDTD_1D
             close(idfile)
 
       END SUBROUTINE display_gauss
+
+      subroutine reflexion(R)
+            REAL(8), intent(in) :: R
+
+            write(*, '(/,T5,A,ES10.3,/)') "Reflexion de la gaussienne temporelle :", R
+
+      end subroutine reflexion
+
+      subroutine transmission(R)
+            ! Variables locales     
+            REAL(8), intent(in) :: R        
+                                                           ! T = 1 + R
+            write(*, '(/,T5,A,ES10.3,/)') "Transmission de la gaussienne temporelle :", 1.d0 + R
+
+      end subroutine transmission   
 
 
 END PROGRAM FDTD_1D
