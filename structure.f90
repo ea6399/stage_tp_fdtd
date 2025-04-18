@@ -127,7 +127,7 @@ module structure
                     if (i < Nx) then
                          fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
                     else
-                         boundary_coef = (c * dt - dx) / (c * dt + dx)
+                         boundary_coef = (c * dt - dx) / (c * dt + dx)     ! Changer c 
                          fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
                     end if
                END DO
