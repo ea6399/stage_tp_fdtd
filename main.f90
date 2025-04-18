@@ -39,7 +39,7 @@ PROGRAM FDTD_1D
       ! Stockage des résultats
       call fd%resultat_stockage(Nt, dt)
 
-      pos = 50 
+      pos = 40
       write(*, '(/,T5,A,I3,/)') "Position de l'observateur : ", pos
       ! CALL reflexion(R)
       ! CALL transmission(R)
