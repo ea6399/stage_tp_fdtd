@@ -117,19 +117,10 @@ module structure
           DO n = 0, Nt - 1
                ! On applique la source
                fd%E(0) = Esrc(n)
-
-               ! Condition de Mur
-               Etemp1 = fd%E(Nx)
-               Etemp2 = fd%E(Nx - 1)
                
                DO i = 1, Nx
                     ! Calcule de E(n)
-                    if (i < Nx) then
-                         fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
-                    else
-                         boundary_coef = (c * dt - dx) / (c * dt + dx)     ! Changer c 
-                         fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
-                    end if
+                    fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
                END DO
                
                DO i = 0, Nx - 1
