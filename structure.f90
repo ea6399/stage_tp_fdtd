@@ -44,7 +44,7 @@ module structure
 
           ! Initialisation des positions de résultats
           Do i = 1, fd%Nres
-               fd%pres(i) = int( i *  Nx / fd%Nres ) ! Position de l'observation 
+               fd%pres(i) = int( ((i-1) *  Nx) / fd%Nres +1) ! Position de l'observation 
           END DO
 
           ! Initialisation des tableaux de résultats
