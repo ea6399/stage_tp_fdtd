@@ -106,22 +106,22 @@ module structure
                Etemp1 = fd%E(Nx)
                Etemp2 = fd%E(Nx - 1)
                
-               DO i = 1, Nx
+               DO i = 1, Nx-1
                     ! Calcule de E(n)
-                    if (i < Nx) then
                          fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
-                    else
-                         boundary_coef = (c * dt - dx) / (c * dt + dx)
-                         fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
-                    end if
                END DO
+
+               ! Condition au bord pour le champ électrique
+               i=Nx
+                boundary_coef = (c * dt - dx) / (c * dt + dx)
+               fd%E(i) = Etemp2 + boundary_coef * (fd%E(i-1) - Etemp1)
 
                DO i = 0, Nx - 1
                     ! Calcule de H(n)
                     fd%H(i) = fd%H(i) + fd%c_H(i) * (fd%E(i + 1) - fd%E(i))
                END DO
                ! Condition au bord pour le champ magnétique
-               fd%H(Nx) = fd%H(Nx-1)
+               !fd%H(Nx) = fd%H(Nx-1)
 
 
                DO i = 1, fd%Nres
