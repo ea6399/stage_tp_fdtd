@@ -10,5 +10,5 @@ Nsnapshots = 500  # Nombre total de snapshots dans votre fichier
 do for [n=1:Nsnapshots] {
     outputfile = sprintf("frames/frame_%05d.png", n)
     set output outputfile
-    plot "E_t.txt" using 1:(column(n+1)) with lines title "Electric Wave Propagation"
+    plot "E_t.txt" using 1:(column(n+1)) with lines title "Wave propagation"
 }
