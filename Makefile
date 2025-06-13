@@ -1,30 +1,29 @@
-# Compiler and flags
-FC = gfortran
-FLAGS = -Wall -Wextra -O2
-LDLIBS = -llapack -lblas
+FC      = gfortran
+FFLAGS  = -ffree-line-length-none -fbacktrace -Wall -Wextra -O2
+LDLIBS  = -llapack -lblas
 
-# Source files
-SOURCES = numerics.f90 fdtd.f90 source.f90 main.f90
-OBJECTS = $(SOURCES:.f90=.o)
+SRC     = numerics.f90 source.f90 fdtd.f90 main.f90
+OBJDIR  = obj
+MODDIR  = mod
+BINDIR  = bin
+DATADIR = data
+OBJ     = $(patsubst %.f90,$(OBJDIR)/%.o,$(SRC))
 
-# Executable name
-EXEC = exec
 
-# Default target
-all: $(EXEC)
+$(OBJDIR)/%.o: %.f90 | $(OBJDIR) $(MODDIR)
+	$(FC) $(FFLAGS) -J$(MODDIR) -c $< -o $@
 
-# Linking the executable
-$(EXEC): $(OBJECTS)
-	$(FC) $(FLAGS) -o $(EXEC) $(OBJECTS)
 
-# Compiling source files
-%.o: %.f90
-	$(FC) $(FLAGS) -c $< -o $@
+exec: $(OBJ) | $(BINDIR)
+	$(FC) $(FFLAGS) -o $(BINDIR)/$@ $^ $(LDLIBS)
 
-# Clean up
+all : $(DATADIR) exec
+
+all: $(BINDIR) exec
+
+
 clean:
-	rm -f $(OBJECTS) $(EXEC) *.mod *.o *.txt
-	rm -f frames/frame_*.png
+	rm -f $(OBJDIR)/*.o $(MODDIR)/*.mod $(BINDIR)/exec $(DATADIR)/* .txt
+	rm -f frames/*
 
-# Phony targets
 .PHONY: all clean
