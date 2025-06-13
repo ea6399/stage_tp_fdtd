@@ -17,13 +17,13 @@ $(OBJDIR)/%.o: %.f90 | $(OBJDIR) $(MODDIR)
 exec: $(OBJ) | $(BINDIR)
 	$(FC) $(FFLAGS) -o $(BINDIR)/$@ $^ $(LDLIBS)
 
-all : $(DATADIR) exec
 
 all: $(BINDIR) exec
 
 
 clean:
-	rm -f $(OBJDIR)/*.o $(MODDIR)/*.mod $(BINDIR)/exec $(DATADIR)/* .txt
+	rm -f $(OBJDIR)/*.o $(MODDIR)/*.mod $(BINDIR)/exec
 	rm -f frames/*
+	rm -f *.txt
 
 .PHONY: all clean
