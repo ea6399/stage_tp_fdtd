@@ -1,7 +1,7 @@
 Module numerics
 ! Déclaration de variables à portée globale
       IMPLICIT NONE 
-            INTEGER, PARAMETER :: Nt = 900                                              ! Nombre d'échantillons en temps
+            INTEGER, PARAMETER :: Nt = 1100                                              ! Nombre d'échantillons en temps
             INTEGER, PARAMETER :: Nx = 500                                              ! Nombre d'échantillons en espace
             REAL(8), PARAMETER :: epsilon_0 = 8.854187817e-12                           ! Permittivité du vide
             REAL(8), PARAMETER :: mu_0 = 1.256637061e-7                                 ! Perméabilité du vide
