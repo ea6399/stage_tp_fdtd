@@ -86,7 +86,7 @@ module structure
      SUBROUTINE calcule(fd, Nx, Nt, Esrc)
           IMPLICIT NONE
           class(FDTD1D), intent(inout) :: fd
-          INTEGER :: Nt, Nx
+          INTEGER :: Nt, Nx, m
           INTEGER :: i, n, snapshot
           REAL(8), ALLOCATABLE :: Esrc(:) ! [0, Nt - 1 ] : source temporelle
 
@@ -98,8 +98,12 @@ module structure
           OPEN (200, file = "H.txt", status = "replace", action = "write", form = "formatted")
 
 
-          snapshot = 0
+          snapshot = 5
+          m = 0 ! Compteur pour les itérations
           DO n = 0, Nt - 1
+               IF ( MOD(n, 20*snapshot) == 0 ) THEN
+                    WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
+               END IF 
                ! On applique la source
                fd%E(0) = Esrc(n)
 
@@ -115,13 +119,30 @@ module structure
                END DO
                ! condition au bord
                fd%H(Nx) = fd%H(Nx - 1)
+
+               IF (MOD(n, snapshot) == 0) THEN
+                    ! Ecriture des champs dans les fichiers
+                    WRITE(100,*) n, (fd%E(i), i = 0, Nx)
+                    WRITE(200,*) n, (fd%H(i), i = 0, Nx)
+                    m = m + 1
+               END IF
                
                DO i = 1, fd%Nres
                     ! On stocke les résultatsg
                     fd%Eres(n, i) = fd%E(fd%pres(i))
                     fd%Hres(n, i) = fd%H(fd%pres(i))
                END DO
+
+
+               
           END DO 
+
+          ! Fermeture des fichiers
+          CLOSE(100)
+          CLOSE(200)
+
+          WRITE(*, '(/,T5,A,/)') "Calcul des champs E et H terminé."
+          WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations effectuées : ", m
      END SUBROUTINE calcule
 
      SUBROUTINE resultat_stockage(fd, Nt, dt)
