@@ -20,6 +20,7 @@ Module numerics
             INTEGER, PARAMETER :: LBD      = 0
             INTEGER, PARAMETER :: UBD      = Nt - 1
             INTEGER, PARAMETER :: idfile   = 10
+            INTEGER, PARAMETER :: i_src    = 0
 
 
             ! Déclaration des matrices et vecteurs

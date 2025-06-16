@@ -87,12 +87,18 @@ module structure
           IMPLICIT NONE
           class(FDTD1D), intent(inout) :: fd
           INTEGER :: Nt, Nx
-          INTEGER :: i, n
+          INTEGER :: i, n, snapshot
           REAL(8), ALLOCATABLE :: Esrc(:) ! [0, Nt - 1 ] : source temporelle
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
+          WRITE(*, '(/,T5,A,I4,/)') "Nombre de points spatiaux : ", Nx
+          WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
+
+          OPEN (100, file = "E.txt", status = "replace", action = "write", form = "formatted")
+          OPEN (200, file = "H.txt", status = "replace", action = "write", form = "formatted")
 
 
+          snapshot = 0
           DO n = 0, Nt - 1
                ! On applique la source
                fd%E(0) = Esrc(n)
@@ -111,7 +117,7 @@ module structure
                fd%H(Nx) = fd%H(Nx - 1)
                
                DO i = 1, fd%Nres
-                    ! On stocke les résultats
+                    ! On stocke les résultatsg
                     fd%Eres(n, i) = fd%E(fd%pres(i))
                     fd%Hres(n, i) = fd%H(fd%pres(i))
                END DO
