@@ -25,8 +25,8 @@ Module numerics
 
 
                   ! Result Saving
-            CHARACTER(LEN = 20), PARAMETER :: nameE = "E_100"
-            CHARACTER(LEN = 20), PARAMETER :: nameH = "H_100"
+            CHARACTER(LEN = 20), PARAMETER :: nameE = "E_5"
+            CHARACTER(LEN = 20), PARAMETER :: nameH = "H_5"
             CHARACTER(LEN=:),allocatable :: fnameE, fnameH
 
 
