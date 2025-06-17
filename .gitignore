@@ -3,3 +3,13 @@ fdtd1d_n.cpp
 gauss.txt
 H_t.txt
 display_fdtd.gp
+E_5.txt
+E_10.txt
+E_30.txt
+E_50.txt
+E_100.txt
+H_5.txt
+H_10.txt
+H_30.txt
+H_50.txt
+H_100.txt

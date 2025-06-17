@@ -95,8 +95,13 @@ module structure
           WRITE(*, '(/,T5,A,ES10.3,/)') "dx = ", dx
           WRITE(*, '(/,T5,A,ES10.3,/)') "dt = ", dt
 
-          OPEN (100, file = "E.txt", status = "replace", action = "write", form = "formatted")
-          OPEN (200, file = "H.txt", status = "replace", action = "write", form = "formatted")
+
+          !--- Construire les noms "data/E.txt" et "data/H_5.txt" ---
+          fnameE = trim(nameE) // ".txt"
+          fnameH = trim(nameH) // ".txt"
+
+          OPEN (100, file = fnameE, status = "replace", action = "write", form = "formatted")
+          OPEN (200, file = fnameH, status = "replace", action = "write", form = "formatted")
 
           ! Ecriture de l'intervalle spatial
           DO i = 0 , Nx
