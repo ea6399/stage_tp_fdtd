@@ -38,7 +38,7 @@ PROGRAM FDTD_1D
       call fd%calcule(Nx, Nt, Esrc)
 
       ! Stockage des résultats
-      call fd%resultat_stockage(Nt, dt)
+      !call fd%resultat_stockage(Nt, dt)
 
       ! Libération de la mémoire
       DEALLOCATE(Esrc)

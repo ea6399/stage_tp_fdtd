@@ -92,12 +92,19 @@ module structure
 
           WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
           WRITE(*, '(/,T5,A,I4,/)') "Nombre de points spatiaux : ", Nx
-          WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
+          WRITE(*, '(/,T5,A,ES10.3,/)') "dx = ", dx
+          WRITE(*, '(/,T5,A,ES10.3,/)') "dt = ", dt
 
           OPEN (100, file = "E.txt", status = "replace", action = "write", form = "formatted")
           OPEN (200, file = "H.txt", status = "replace", action = "write", form = "formatted")
 
+          ! Ecriture de l'intervalle spatial
+          DO i = 0 , Nx
+               WRITE(100,*) i * dx
+               WRITE(200,*) i * dx
+          END DO
 
+          WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
           snapshot = 5
           m = 0 ! Compteur pour les itérations
           DO n = 0, Nt - 1
@@ -122,8 +129,10 @@ module structure
 
                IF (MOD(n, snapshot) == 0) THEN
                     ! Ecriture des champs dans les fichiers
-                    WRITE(100,*) n, (fd%E(i), i = 0, Nx)
-                    WRITE(200,*) n, (fd%H(i), i = 0, Nx)
+                    DO i = 0, Nx
+                         WRITE(100,*) fd%E(i)
+                         WRITE(200,*) fd%H(i)
+                    END DO
                     m = m + 1
                END IF
                
