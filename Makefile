@@ -24,6 +24,6 @@ all: $(BINDIR) exec
 clean:
 	rm -f $(OBJDIR)/*.o $(MODDIR)/*.mod $(BINDIR)/exec
 	rm -f frames/*
-	rm -f *.txt
+#	rm -f *.txt
 
 .PHONY: all clean
