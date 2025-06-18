@@ -47,7 +47,7 @@ PROGRAM FDTD_1D
       call fd%freeMemory()
       WRITE(*, '(/,T5,A,/)') "Libération de la mémoire terminée."
 
-
+      print * , c
 
       CONTAINS
 
