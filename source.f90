@@ -38,8 +38,5 @@ module source
                         E(n) = gauss_t(n, dt)
                   END DO
             ENDSUBROUTINE compute_gauss
-
-
-    
-
+            
 end module source
