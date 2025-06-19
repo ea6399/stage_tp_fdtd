@@ -29,10 +29,12 @@ PROGRAM FDTD_1D
       call fd%init(Nx, dt, dx)
 
       !Initialisation gaussienne
-      call compute_gauss(Esrc, base_t, Nt)
+      !call compute_gauss(Esrc, base_t, Nt)
+
+      CALL sinusoidal_source(Esrc, base_t, Nt)
 
       ! Affichage de la gaussienne
-      CALL display_gauss("gauss.txt", Esrc, base_t)
+      CALL display_gauss("sinus.txt", Esrc, base_t)
 
       ! Calcul des champs E et H
       call fd%calcule(Nx, Nt, Esrc)
