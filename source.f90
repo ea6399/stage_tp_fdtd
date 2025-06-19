@@ -39,7 +39,43 @@ module source
                   END DO
             ENDSUBROUTINE compute_gauss
 
+            REAL(8) FUNCTION sinusoidal_wave(n,dt)
 
-    
+                  IMPLICIT NONE
+                  ! Arguments
+                  REAL(8), intent(in) :: dt
+                  INTEGER, intent(in) :: n
+
+                  ! Variables locales
+                  REAL(8) :: omega0
+
+                  omega0 = 2.0d0 * PI * fmax
+
+                  sinusoidal_wave = sin(omega0 * n * dt)
+
+            END FUNCTION
+
+            SUBROUTINE sinusoidal_source(E,base_t, Nt)
+
+                  IMPLICIT NONE
+                  ! Arguments
+                  REAL(8), intent(inout) :: E(0:Nt - 1)
+                  REAL(8), intent(inout) :: base_t(0:Nt - 1)
+                  INTEGER, intent(in) :: Nt
+
+                  ! Variables locales
+                  INTEGER :: n
+
+                  DO n = 0, Nt - 1
+                        base_t(n) = n * dt
+                  end do
+
+                  ! Calcul de la source sinusoïdale
+                  DO n = 0, Nt -1 
+                        ! Calcul de la source sinusoïdale
+                        E(n) = sinusoidal_wave(n, dt)
+                  END DO
+
+            END SUBROUTINE sinusoidal_source
 
 end module source
