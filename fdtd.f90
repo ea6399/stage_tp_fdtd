@@ -111,6 +111,11 @@ module structure
 
           WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
           snapshot = 5
+
+          WRITE(*, '(/,T5,A,/)') " Enregistrement des paramètres dans les fichiers "
+          OPEN(UNIT = 10, file = "params.txt", status = "replace", action = "write", form = "formatted")
+               WRITE(10, *) Nt, Nx + 1, dx, dt, snapshot
+          CLOSE(10)
           m = 0 ! Compteur pour les itérations
           DO n = 0, Nt - 1
                IF ( MOD(n, 20*snapshot) == 0 ) THEN
