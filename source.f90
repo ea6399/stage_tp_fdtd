@@ -15,18 +15,17 @@ module source
                   gauss_t = a0 * exp( - ( ( n * dt - t0 ) / T )**2 )
             ENDFUNCTION gauss_t
 
-            SUBROUTINE compute_gauss(E,base, Nt)
+            SUBROUTINE compute_gauss(E,base)
                   IMPLICIT NONE
                   ! Arguments
                   REAL(8), intent(inout) :: base(LBD:UBD)
                   REAL(8), intent(inout) :: E(LBD:UBD)
-                  INTEGER, intent(in) :: Nt
 
                   ! Variables locales
                   INTEGER :: n
 
 
-                  print *,"Lower bound / Upper bound / Nt :", LBD, UBD, Nt
+                 
 
                   ! Intervalles de définition de la gaussienne temporelle
                   DO n = LBD, UBD

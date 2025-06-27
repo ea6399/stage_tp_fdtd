@@ -11,7 +11,7 @@ PROGRAM FDTD_1D
       call init_vectors()
 
       ! Temps de propagation de l'onde 
-      WRITE(*,'(/,T5,A,ES10.3,/)') "Temps Tmax de propagation de l'onde : ", dt * Nt
+      !WRITE(*,'(/,T5,A,ES10.3,/)') "Temps Tmax de propagation de l'onde : ", dt * Nt
 
 
 
@@ -29,7 +29,7 @@ PROGRAM FDTD_1D
       call fd%init(Nx, dt, dx)
 
       !Initialisation gaussienne
-      call compute_gauss(Esrc, base_t, Nt)
+      call compute_gauss(Esrc, base_t)
 
       !CALL sinusoidal_source(Esrc, base_t, Nt)
 
@@ -47,7 +47,7 @@ PROGRAM FDTD_1D
       DEALLOCATE(base_t)
       ! Dans le type FDTD1D
       call fd%freeMemory()
-      WRITE(*, '(/,T5,A,/)') "Libération de la mémoire terminée."
+      !WRITE(*, '(/,T5,A,/)') "Libération de la mémoire terminée."
 
 
 

@@ -51,7 +51,7 @@ module structure
           fd%Eres = 0.0d0
           fd%Hres = 0.0d0
 
-          WRITE(*,'(/,T5,A,/)') "Initialisation des points d'observation terminée."
+          !WRITE(*,'(/,T5,A,/)') "Initialisation des points d'observation terminée."
      END SUBROUTINE resultat_init  
 
 
@@ -66,7 +66,7 @@ module structure
           REAL(8), intent(in) :: dt, dx
 
           ALLOCATE( fd%E(0 : Nx), fd%H(0 : Nx), fd%c_E(0 : Nx), fd%c_H(0 : Nx)) ! Allocation de la mémoire pour les champs E et H
-          WRITE(*,'(/,T5,A,ES10.3,/)') "dt = ", dt
+          !WRITE(*,'(/,T5,A,ES10.3,/)') "dt = ", dt
 
           ! Initialiation des champs E et H ainsi que des coefficients
           fd%E = 0.0d0
@@ -74,10 +74,10 @@ module structure
           fd%c_E = dt / (epsilon_0 * dx)
           fd%c_H = dt / (mu_0 * dx)
 
-          PRINT *, "c_E(0) =", fd%c_E(0)
-          PRINT *, "C_h(0) =", fd%c_H(0)
+          !PRINT *, "c_E(0) =", fd%c_E(0)
+          !PRINT *, "C_h(0) =", fd%c_H(0)
 
-          WRITE(*,'(/,T5,A,/)') "Initialisation des champs ainsi que des coefficents terminée."
+          !WRITE(*,'(/,T5,A,/)') "Initialisation des champs ainsi que des coefficents terminée."
      ENDSUBROUTINE init
 
 
@@ -90,10 +90,10 @@ module structure
           INTEGER :: i, n, snapshot
           REAL(8), ALLOCATABLE :: Esrc(:) ! [0, Nt - 1 ] : source temporelle
 
-          WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
-          WRITE(*, '(/,T5,A,I4,/)') "Nombre de points spatiaux : ", Nx
-          WRITE(*, '(/,T5,A,ES10.3,/)') "dx = ", dx
-          WRITE(*, '(/,T5,A,ES10.3,/)') "dt = ", dt
+          ! WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
+          ! WRITE(*, '(/,T5,A,I4,/)') "Nombre de points spatiaux : ", Nx
+          ! WRITE(*, '(/,T5,A,ES10.3,/)') "dx = ", dx
+          ! WRITE(*, '(/,T5,A,ES10.3,/)') "dt = ", dt
 
 
           !--- Construire les noms "data/E.txt" et "data/H_5.txt" ---
@@ -109,18 +109,18 @@ module structure
                WRITE(200,*) i * dx
           END DO
 
-          WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
+          !WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
           snapshot = 5
 
-          WRITE(*, '(/,T5,A,/)') " Enregistrement des paramètres dans les fichiers "
+          !WRITE(*, '(/,T5,A,/)') " Enregistrement des paramètres dans les fichiers "
           OPEN(UNIT = 10, file = "params.txt", status = "replace", action = "write", form = "formatted")
                WRITE(10, *) Nt, Nx + 1, dx, dt, snapshot
           CLOSE(10)
           m = 0 ! Compteur pour les itérations
           DO n = 0, Nt - 1
-               IF ( MOD(n, 20*snapshot) == 0 ) THEN
-                    WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
-               END IF 
+               ! IF ( MOD(n, 20*snapshot) == 0 ) THEN
+               !      WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
+               ! END IF 
                ! On applique la source
                fd%E(0) = Esrc(n)
 
@@ -160,8 +160,8 @@ module structure
           CLOSE(100)
           CLOSE(200)
 
-          WRITE(*, '(/,T5,A,/)') "Calcul des champs E et H terminé."
-          WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations effectuées : ", m
+         ! WRITE(*, '(/,T5,A,/)') "Calcul des champs E et H terminé."
+          !WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations effectuées : ", m
      END SUBROUTINE calcule
 
      SUBROUTINE resultat_stockage(fd, Nt, dt)
@@ -193,6 +193,7 @@ module structure
      
 
      subroutine freeMemory(fd)
+
           class(FDTD1D), intent(inout) :: fd
 
           if (allocated(fd%E))    deallocate(fd%E)
@@ -202,6 +203,7 @@ module structure
           if (allocated(fd%pres)) deallocate(fd%pres)
           if (allocated(fd%Eres)) deallocate(fd%Eres)
           if (allocated(fd%Hres)) deallocate(fd%Hres)
+
      end subroutine freeMemory
 
 
