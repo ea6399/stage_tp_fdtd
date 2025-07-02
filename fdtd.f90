@@ -88,6 +88,7 @@ module structure
           class(FDTD1D), intent(inout) :: fd
           INTEGER :: Nt, Nx, m
           INTEGER :: i, n, snapshot
+          REAL(8) :: E_n1(Nx - 1 : Nx)
           REAL(8), ALLOCATABLE :: Esrc(:) ! [0, Nt - 1 ] : source temporelle
 
           ! WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
@@ -103,14 +104,14 @@ module structure
           OPEN (100, file = fnameE, status = "replace", action = "write", form = "formatted")
           OPEN (200, file = fnameH, status = "replace", action = "write", form = "formatted")
 
-          ! Ecriture de l'intervalle spatial
-          DO i = 0 , Nx
-               WRITE(100,*) i * dx
-               WRITE(200,*) i * dx
-          END DO
+          ! ! Ecriture de l'intervalle spatial
+          ! DO i = 0 , Nx
+          !      WRITE(100,*) i * dx
+          !      WRITE(200,*) i * dx
+          ! END DO
 
           WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
-          snapshot = 5
+          snapshot = 1
 
           !WRITE(*, '(/,T5,A,/)') " Enregistrement des paramètres dans les fichiers "
           OPEN(UNIT = 10, file = "params.txt", status = "replace", action = "write", form = "formatted")
@@ -124,11 +125,17 @@ module structure
                ! On applique la source
                fd%E(0) = Esrc(n)
 
+               E_n1(Nx - 1) = fd%E(Nx - 1)
+               E_n1(Nx) = fd%E(Nx)
+
                ! Calcul spatial des champs E et H
-               DO i = 1, Nx
+               DO i = 1, Nx-1
                     ! Calcule de E au temps n
                     fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
                END DO 
+
+               ! Mur condition
+               fd%E(Nx) = E_n1(Nx - 1) + (c * dt - dx) / (c * dt + dx) * (fd%E(Nx - 1) - E_n1(Nx))
 
                DO i = 0, Nx - 1 
                     ! Calcule de H au temps n
