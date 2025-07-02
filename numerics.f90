@@ -15,9 +15,9 @@ Module numerics
             REAL(8), PARAMETER :: a0       = 1.0d0
             REAL(8), PARAMETER :: T        = sqrt(log(attfmax)) / (PI * fmax)
             REAL(8), PARAMETER :: t0       = T * sqrt(log(att0))
-            REAL(8), PARAMETER :: mesh_density = 50.d0                                  ! Densité du maillage spatial
+            REAL(8), PARAMETER :: mesh_density = 100.d0                                  ! Densité du maillage spatial
             REAL(8), PARAMETER :: dx       = (c / fmax) / mesh_density
-            REAL(8), PARAMETER :: dt       = 0.98d0 * dx / c
+            REAL(8), PARAMETER :: dt       = 0.5d0 * dx / c
             INTEGER, PARAMETER :: LBD      = 0
             INTEGER, PARAMETER :: UBD      = Nt - 1
             INTEGER, PARAMETER :: idfile   = 10
@@ -25,8 +25,8 @@ Module numerics
 
 
                   ! Result Saving
-            CHARACTER(LEN = 20), PARAMETER :: nameE = "E"
-            CHARACTER(LEN = 20), PARAMETER :: nameH = "H"
+            CHARACTER(LEN = 20), PARAMETER :: nameE = "E_6"
+            CHARACTER(LEN = 20), PARAMETER :: nameH = "H_6"
             CHARACTER(LEN=:),allocatable :: fnameE, fnameH
 
 

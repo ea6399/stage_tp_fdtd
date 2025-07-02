@@ -109,7 +109,7 @@ module structure
                WRITE(200,*) i * dx
           END DO
 
-          !WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
+          WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
           snapshot = 5
 
           !WRITE(*, '(/,T5,A,/)') " Enregistrement des paramètres dans les fichiers "
@@ -118,9 +118,9 @@ module structure
           CLOSE(10)
           m = 0 ! Compteur pour les itérations
           DO n = 0, Nt - 1
-               ! IF ( MOD(n, 20*snapshot) == 0 ) THEN
-               !      WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
-               ! END IF 
+               IF ( MOD(n, 20*snapshot) == 0 ) THEN
+                    WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
+               END IF 
                ! On applique la source
                fd%E(0) = Esrc(n)
 
