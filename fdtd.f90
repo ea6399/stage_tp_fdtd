@@ -88,7 +88,7 @@ module structure
           class(FDTD1D), intent(inout) :: fd
           INTEGER :: Nt, Nx, m
           INTEGER :: i, n, snapshot
-          REAL(8) :: E_n1(Nx - 1 : Nx)
+          REAL(8) :: E_n1(Nx - 1 : Nx), t0, t1
           REAL(8), ALLOCATABLE :: Esrc(:) ! [0, Nt - 1 ] : source temporelle
 
           ! WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations temporelles : ", Nt
@@ -115,9 +115,10 @@ module structure
 
           !WRITE(*, '(/,T5,A,/)') " Enregistrement des paramètres dans les fichiers "
           OPEN(UNIT = 10, file = "params.txt", status = "replace", action = "write", form = "formatted")
-               WRITE(10, *) Nt, Nx + 1, dx, dt, snapshot
+               WRITE(10, *) Nt, Nx + 1, dx, dt, snapshot, Courant_number, c
           CLOSE(10)
           m = 0 ! Compteur pour les itérations
+          CALL CPU_TIME(t0) ! Démarre le chronomètre
           DO n = 0, Nt - 1
                IF ( MOD(n, 20*snapshot) == 0 ) THEN
                     WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
@@ -169,6 +170,8 @@ module structure
 
          ! WRITE(*, '(/,T5,A,/)') "Calcul des champs E et H terminé."
           !WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations effectuées : ", m
+          CALL CPU_TIME(t1) ! Arrête le chronomètre
+          WRITE(*, '(/,T5,A,F10.3,/)') "Temps de calcul : ", t1 - t0
      END SUBROUTINE calcule
 
      SUBROUTINE resultat_stockage(fd, Nt, dt)
