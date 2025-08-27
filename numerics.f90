@@ -15,8 +15,8 @@ Module numerics
             REAL(8), PARAMETER :: a0       = 1.0d0
             REAL(8), PARAMETER :: T        = sqrt(log(attfmax)) / (PI * fmax)
             REAL(8), PARAMETER :: t0       = T * sqrt(log(att0))
-            REAL(8), parameter :: courant_number = 0.5d0
-            REAL(8), PARAMETER :: mesh_density = 10.d0                                  ! Densité du maillage spatial
+            REAL(8), parameter :: courant_number = 0.98d0
+            REAL(8), PARAMETER :: mesh_density = 30.d0                                  ! Densité du maillage spatial
             REAL(8), PARAMETER :: dx       = (c / fmax) / mesh_density
             REAL(8), PARAMETER :: dt       = courant_number * dx / c
             INTEGER, PARAMETER :: LBD      = 0
@@ -25,9 +25,9 @@ Module numerics
             INTEGER, PARAMETER :: i_src    = 0
 
 
-                  ! Result Saving
-            CHARACTER(LEN = 20), PARAMETER :: nameE = "E_1"
-            CHARACTER(LEN = 20), PARAMETER :: nameH = "H_1"
+            ! Result Saving
+            CHARACTER(LEN = 20), PARAMETER :: nameE = "E_5"
+            CHARACTER(LEN = 20), PARAMETER :: nameH = "H_5"
             CHARACTER(LEN=:),allocatable :: fnameE, fnameH
 
 

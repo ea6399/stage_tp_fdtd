@@ -104,14 +104,14 @@ module structure
           OPEN (100, file = fnameE, status = "replace", action = "write", form = "formatted")
           OPEN (200, file = fnameH, status = "replace", action = "write", form = "formatted")
 
-          ! ! Ecriture de l'intervalle spatial
-          ! DO i = 0 , Nx
-          !      WRITE(100,*) i * dx
-          !      WRITE(200,*) i * dx
-          ! END DO
+          ! Ecriture de l'intervalle spatial
+          DO i = 0 , Nx
+               WRITE(100,*) i * dx
+               WRITE(200,*) i * dx
+          END DO
 
-          WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
-          snapshot = 1
+          !WRITE(*, '(/,T5,A,I4,/)') " Injection de la source en : ", i_src
+          snapshot = 5
 
           !WRITE(*, '(/,T5,A,/)') " Enregistrement des paramètres dans les fichiers "
           OPEN(UNIT = 10, file = "params.txt", status = "replace", action = "write", form = "formatted")
@@ -120,9 +120,9 @@ module structure
           m = 0 ! Compteur pour les itérations
           CALL CPU_TIME(t0) ! Démarre le chronomètre
           DO n = 0, Nt - 1
-               IF ( MOD(n, 20*snapshot) == 0 ) THEN
-                    WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
-               END IF 
+               ! IF ( MOD(n, 20*snapshot) == 0 ) THEN
+               !      WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
+               ! END IF 
                ! On applique la source
                fd%E(0) = Esrc(n)
 
@@ -171,7 +171,7 @@ module structure
          ! WRITE(*, '(/,T5,A,/)') "Calcul des champs E et H terminé."
           !WRITE(*, '(/,T5,A,I4,/)') "Nombre d'itérations effectuées : ", m
           CALL CPU_TIME(t1) ! Arrête le chronomètre
-          WRITE(*, '(/,T5,A,F10.3,/)') "Temps de calcul : ", t1 - t0
+          !WRITE(*, '(/,T5,A,F10.3,/)') "Temps de calcul : ", t1 - t0
      END SUBROUTINE calcule
 
      SUBROUTINE resultat_stockage(fd, Nt, dt)
