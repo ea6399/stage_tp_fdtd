@@ -111,14 +111,16 @@ module structure
                IF ( MOD(n, 20*snapshot) == 0 ) THEN
                     WRITE(*, '(/,T5,A,I4,/)') "Itération temporelle : ", n
                END IF 
-               ! On applique la source
-               fd%E(0) = Esrc(n)
+
 
                ! Calcul spatial des champs E et H
                DO i = 1, Nx
                     ! Calcule de E au temps n
                     fd%E(i) = fd%E(i) + fd%c_E(i) * (fd%H(i) - fd%H(i - 1))
                END DO 
+
+                              ! On applique la source
+               fd%E(0) = Esrc(n)
 
                DO i = 0, Nx - 1 
                     ! Calcule de H au temps n
